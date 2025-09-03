@@ -1,5 +1,5 @@
 import express, { Application } from 'express';
-// import { routes } from '../routes';
+import { routes } from '../routes';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
@@ -18,6 +18,6 @@ app.use(bodyParser.json())
 app.use(express.json());
 
 // routes
-// app.use('/api/v1', routes);
+app.use('/api/v1', routes);
 
 export default app;

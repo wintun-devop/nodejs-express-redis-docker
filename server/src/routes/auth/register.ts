@@ -1,12 +1,22 @@
 import { Router, Request, Response } from "express";
 import { bcryptHash } from "../../utils/hash";
+import { RegisterSchema } from "../../form-schema";
+
 
 export const registerRoute = Router();
 
 registerRoute.post("/", async (request: Request, response: Response): Promise<any> => {
     try {
-        const reqBody = await request.body
-        const {password,...rest} = reqBody 
+        const parsed = RegisterSchema.safeParse(request.body)
+        if (!parsed.success) {
+            return response.status(400).json({
+                status: "error",
+                message: "Invalid request body",
+                // Zod's structured error output
+                errors: parsed.error.format(), 
+            });
+        }
+        const { password, ...rest } = parsed.data;
         const hasheduPassword = await bcryptHash(password)
         return response.status(201).json({ status: "success", "message": "success", result: hasheduPassword })
     } catch (e) {

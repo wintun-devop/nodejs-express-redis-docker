@@ -8,6 +8,8 @@ dotenv.config();
 // declare instance
 const app:Application = express();
 
+const apiBasePath = process.env.API_BASE_PATH as string;
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -18,6 +20,6 @@ app.use(bodyParser.json())
 app.use(express.json());
 
 // routes
-app.use('/api/v1', routes);
+app.use(`${apiBasePath}`, routes);
 
 export default app;

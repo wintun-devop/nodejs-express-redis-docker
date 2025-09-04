@@ -8,5 +8,6 @@ import { defaultRoute } from './default';
 export const routes = express.Router();
 
 
+
 // register routes
 routes.use("/health",defaultRoute)

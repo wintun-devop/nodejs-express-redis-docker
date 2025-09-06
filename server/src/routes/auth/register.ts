@@ -3,6 +3,8 @@ import { bcryptHash } from "../../utils/hash";
 import { RegisterSchema } from "../../form-schema";
 import { UserRepo } from "../../repositories/user-repo";
 import { uniqueString } from "../../utils/unique-string";
+import { hashPasswordArgon2 } from "../../utils/argon2hash";
+
 
 
 
@@ -19,7 +21,7 @@ registerRoute.post("/", async (request: Request, response: Response): Promise<an
                 errors: parsed.error.format(),
             });
         }
-        const hasheduPassword = await bcryptHash(parsed.data.password)
+        const hasheduPassword = await hashPasswordArgon2(parsed.data.password)
         const userId =await uniqueString("usr")
         const data = {
             email:parsed.data.email,
